@@ -1,3 +1,6 @@
+// app/lib/overfast.ts
+// This file contains functions to interact with the Overfast API
+
 export async function getPlayerSummary(query: string) {
   const search = query.trim().replace("#", "-");
 
