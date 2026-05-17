@@ -5,68 +5,61 @@
 
 import type { Player } from "../lib/types";
 
-export default function PlayerCard({ player }: { player: Player }) {
-  const profile = {
-    user: {
-      username: player.username,
-      title: player.title,
-      avatar: player.avatar,
-      lastUpdatedAt: player.last_updated_at,
-      endorsementLevel: player.endorsement?.level,
-    },
-    competitive: {
-      season: player.competitive?.pc?.season,
-      tank: {
-        division: player.competitive?.pc?.tank?.division,
-        tier: player.competitive?.pc?.tank?.tier,
-        rankIcon: player.competitive?.pc?.tank?.rank_icon,
-        tierIcon: player.competitive?.pc?.tank?.tier_icon,
-        roleIcon: player.competitive?.pc?.tank?.role_icon,
-      },
-      damage: {
-        division: player.competitive?.pc?.damage?.division,
-        tier: player.competitive?.pc?.damage?.tier,
-        rankIcon: player.competitive?.pc?.damage?.rank_icon,
-        tierIcon: player.competitive?.pc?.damage?.tier_icon,
-        roleIcon: player.competitive?.pc?.damage?.role_icon,
-      },
-      support: {
-        division: player.competitive?.pc?.support?.division,
-        tier: player.competitive?.pc?.support?.tier,
-        rankIcon: player.competitive?.pc?.support?.rank_icon,
-        tierIcon: player.competitive?.pc?.support?.tier_icon,
-        roleIcon: player.competitive?.pc?.support?.role_icon,
-      }
-    },
-  };
+type PlayerCardProps = {
+  player: Player;
+  searchedBattleTag: string;
+};
+
+
+export default function PlayerCard({ player, searchedBattleTag }: PlayerCardProps) {
+  // Extract relevant player information for display
+  const username = player.username;
+  const avatar = player.avatar;
+  const title = player.title;
+  const lastUpdatedAt = player.last_updated_at;
+  const endorsementLevel = player.endorsement?.level;
+  const season = player.competitive?.pc?.season;
+  const tankDivision = player.competitive?.pc?.tank?.division;
+  const tankTier = player.competitive?.pc?.tank?.tier;
+  const damageDivision = player.competitive?.pc?.damage?.division;
+  const damageTier = player.competitive?.pc?.damage?.tier;
+  const supportDivision = player.competitive?.pc?.support?.division;
+  const supportTier = player.competitive?.pc?.support?.tier;  
+
+  // Helper function to convert text to sentence case
+  function toSentenceCase(text:string): string {
+    if (!text) return "";
+
+    const lowercase = text.toLowerCase();
+    return lowercase.charAt(0).toUpperCase() + lowercase.slice(1);
+  }
 
   return (
-    <div className="border-1 flex flex-col items-center">
-      <img src={player.avatar} alt={player.username} width={80} />
-      <p>{profile.user.username}</p>
-      <p>{profile.user.title}</p>
-      <p>
-        {player.last_updated_at != null
-          ? new Date(player.last_updated_at * 1000).toLocaleString()
+    <div className="w-xl p-4 border rounded-[10px] flex flex-col items-center gap-1">
+      <img src={avatar} alt={username} width={80} />
+      <p>{searchedBattleTag}</p>
+      <p>{title}</p>
+      <p>Last Updated:{" "}
+        {lastUpdatedAt != null
+          ? new Date(lastUpdatedAt * 1000).toLocaleString()
           : "Last updated: unavailable"}
       </p>
-      <p>Endorsement level: {profile.user.endorsementLevel}</p>
-      <p>Season: {profile.competitive.season ?? "N/A"}</p>
-      <p>PC Stats</p>
-      <div>
+      <p>Endorsement Level: {endorsementLevel}</p>
+      <p className="text-xs">PC</p>
+      <div className="flex flex-col items-center">
         <div>
-          <p>Tank: 
+          <p>Tank: {" "}
             {player.competitive?.pc?.tank
-            ? `${player.competitive.pc.tank.division} ${player.competitive.pc.tank.tier}`
+            ? `${tankDivision ?? "N/A"} ${tankTier ?? "N/A"}`
             : "N/A"}</p>
         </div>
-        <p>Damage: 
+        <p>Damage: {""}
           {player.competitive?.pc?.damage
-          ? `${player.competitive.pc.damage.division} ${player.competitive.pc.damage.tier}`
+          ? `${damageDivision ?? "N/A"} ${damageTier ?? "N/A"}`
           : "N/A"}</p>
         <p>Support: 
           {player.competitive?.pc?.support
-          ? ` ${player.competitive.pc.support.division} ${player.competitive.pc.support.tier}`
+          ? ` ${toSentenceCase(supportDivision ?? "N/A")} ${supportTier ?? "N/A"}`
           : "N/A"}
         </p>
       </div>

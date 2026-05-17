@@ -14,16 +14,19 @@ export default function PlayerSearch() {
     const [query, setQuery] = useState("");
     const [player, setPlayer] = useState<Player | null>(null);
     const [error, setError] = useState("");
+    const [searchedBattleTag, setSearchedBattleTag] = useState("");
 
     // Function to handle the search action
     async function handleSearch() {
         try {
             // Fetch player summary from the Overfast API
             const data = await getPlayerSummary(query);
+            setSearchedBattleTag(query.trim());
             setPlayer(data);
             setError("");
         } catch {
             setPlayer(null);
+            setSearchedBattleTag("");
             setError("Player not found.");
         }
     }
@@ -31,14 +34,20 @@ export default function PlayerSearch() {
     return (
         <>
             {/* Input field for the search query and a button to trigger the search */}
-            <input value={query} onChange={(e) => setQuery(e.target.value)} />
-            <button onClick={handleSearch}>Search</button>
+            <div className="flex flex-row gap-3">
+                <input 
+                    className="w-xl border border-rounded-[10px]"
+                    value={query} 
+                    onChange={(e) => setQuery(e.target.value)} />
+                <button onClick={handleSearch}>Search</button>
+            </div>
+
 
             {/* Display error message if player is not found */}
             {error && <p>{error}</p>}
 
             {/* Display the player card if player data is available */}
-            {player && <PlayerCard player={player} />}
+            {player && <PlayerCard player={player} searchedBattleTag={searchedBattleTag} />}
         </>
     );
 }
