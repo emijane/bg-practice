@@ -15,6 +15,7 @@ type PlayerCardProps = {
 export default function PlayerCard({ player, searchedBattleTag }: PlayerCardProps) {
   const username = player.username;
   const avatar = player.avatar;
+  const namecard = player.namecard;
   const title = player.title ?? "No title equipped";
   const lastUpdatedAt = player.last_updated_at;
   const endorsementLevel = player.endorsement?.level ?? "N/A";
@@ -32,91 +33,108 @@ export default function PlayerCard({ player, searchedBattleTag }: PlayerCardProp
     return lowercase.charAt(0).toUpperCase() + lowercase.slice(1);
   }
 
+  const roleRanks = [
+    {
+      label: "Tank",
+      value: player.competitive?.pc?.tank ? `${tankDivision ?? "N/A"} ${tankTier ?? "N/A"}` : "N/A",
+      active: Boolean(player.competitive?.pc?.tank),
+    },
+    {
+      label: "DPS",
+      value: player.competitive?.pc?.damage
+        ? `${damageDivision ?? "N/A"} ${damageTier ?? "N/A"}`
+        : "N/A",
+      active: Boolean(player.competitive?.pc?.damage),
+    },
+    {
+      label: "Support",
+      value: player.competitive?.pc?.support
+        ? `${toSentenceCase(supportDivision ?? "N/A")} ${supportTier ?? "N/A"}`
+        : "N/A",
+      active: Boolean(player.competitive?.pc?.support),
+    },
+  ];
+
   const cardClassName =
-    "grid gap-4 rounded-xl border border-white/6 bg-[#111111] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.035),0_10px_22px_rgba(0,0,0,0.18)] transition duration-150 hover:-translate-y-px hover:border-white/12 hover:bg-[#171717] sm:grid-cols-[auto_1fr]";
+    "oc-card oc-card-hover overflow-hidden";
 
-  const labelClassName =
-    "[font-family:var(--font-ibm-plex-mono)] text-[11px] uppercase tracking-[0.14em] text-[#737373]";
-
-  const valueClassName = "text-sm font-semibold tracking-[-0.02em] text-[#f5f5f5]";
+  const labelClassName = "oc-meta";
 
   return (
     <article className={cardClassName}>
-      <div className="flex items-start gap-3 sm:flex-col sm:items-center sm:gap-2">
-        <img
-          src={avatar}
-          alt={`${username} avatar`}
-          width={88}
-          height={88}
-          className="h-22 w-22 rounded-full border border-white/6 object-cover"
-        />
-        <div className="flex min-w-0 flex-1 flex-col gap-1 sm:hidden">
-          <p className="truncate text-[15px] font-semibold tracking-[-0.03em] text-[#f5f5f5]">
-            {searchedBattleTag}
-          </p>
-          <p className="truncate text-sm text-[#a1a1a1]">{title}</p>
-        </div>
+      <div className="relative">
+        {namecard ? (
+          <img
+            src={namecard}
+            alt={`${username} namecard`}
+            className="h-20 w-full object-cover opacity-80"
+          />
+        ) : (
+          <div className="oc-banner-fallback h-20 w-full" />
+        )}
+        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.04)_0%,rgba(0,0,0,0.46)_100%)]" />
       </div>
 
-      <div className="flex min-w-0 flex-col gap-4">
-        <div className="hidden flex-col gap-1 sm:flex">
-          <p className="truncate text-[15px] font-semibold tracking-[-0.03em] text-[#f5f5f5]">
-            {searchedBattleTag}
-          </p>
-          <p className="truncate text-sm text-[#a1a1a1]">{title}</p>
+      <div className="relative px-4 pb-4">
+        <div className="absolute left-4 top-0 z-20 -translate-y-[40%]">
+          <img
+            src={avatar}
+            alt={`${username} avatar`}
+            width={84}
+            height={84}
+            className="oc-avatar-frame block h-[84px] w-[84px] shrink-0 object-cover ring-2 ring-[var(--surface)]"
+          />
         </div>
-
-        <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-start">
-          <div className="grid gap-3 sm:grid-cols-3">
-            <div className="flex flex-col gap-1">
-              <p className={labelClassName}>Updated</p>
-              <p className="[font-family:var(--font-ibm-plex-mono)] text-[11px] text-[#a1a1a1]">
-                {lastUpdatedAt != null
-                  ? new Date(lastUpdatedAt * 1000).toLocaleString()
-                  : "Unavailable"}
+        <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center">
+          <div className="flex min-w-0 items-center pl-[96px] pt-3">
+            <div className="flex min-w-0 flex-col gap-0.5">
+              <p className="truncate text-[18px] font-semibold tracking-[-0.04em] text-[var(--text)]">
+                {searchedBattleTag}
               </p>
-            </div>
-
-            <div className="flex flex-col gap-1">
-              <p className={labelClassName}>Endorsement</p>
-              <p className={valueClassName}>{endorsementLevel}</p>
-            </div>
-
-            <div className="flex flex-col gap-1">
-              <p className={labelClassName}>Platform</p>
-              <p className={valueClassName}>PC</p>
+              <p className="truncate text-[13px] text-[var(--text-soft)]">{title}</p>
             </div>
           </div>
 
-          <p className="justify-self-start rounded-full border border-white/6 bg-[#070709] px-2.5 py-1 [font-family:var(--font-ibm-plex-mono)] text-[11px] uppercase tracking-[0.14em] text-[#737373] sm:justify-self-end">
-            Competitive
+          <div className="flex flex-wrap items-center gap-1.5 sm:justify-end">
+            <p className="oc-pill">
+              Competitive
+            </p>
+            <p className="oc-pill">
+              Platform: PC
+            </p>
+            <p className="oc-pill">
+              Endorsement: {endorsementLevel}
+            </p>
+          </div>
+        </div>
+
+        <div className="mt-2 flex items-center justify-between gap-3">
+          <p className="oc-meta-quiet">
+            {lastUpdatedAt != null
+              ? `Updated ${new Date(lastUpdatedAt * 1000).toLocaleString()}`
+              : "Updated unavailable"}
           </p>
         </div>
 
-        <div className="grid gap-2 sm:grid-cols-3">
-          <div className="rounded-xl border border-white/6 bg-[#070709] px-3 py-2">
-            <p className={labelClassName}>Tank</p>
-            <p className={`${valueClassName} mt-1`}>
-              {player.competitive?.pc?.tank ? `${tankDivision ?? "N/A"} ${tankTier ?? "N/A"}` : "N/A"}
-            </p>
-          </div>
-
-          <div className="rounded-xl border border-white/6 bg-[#070709] px-3 py-2">
-            <p className={labelClassName}>Damage</p>
-            <p className={`${valueClassName} mt-1`}>
-              {player.competitive?.pc?.damage
-                ? `${damageDivision ?? "N/A"} ${damageTier ?? "N/A"}`
-                : "N/A"}
-            </p>
-          </div>
-
-          <div className="rounded-xl border border-white/6 bg-[#070709] px-3 py-2">
-            <p className={labelClassName}>Support</p>
-            <p className={`${valueClassName} mt-1`}>
-              {player.competitive?.pc?.support
-                ? `${toSentenceCase(supportDivision ?? "N/A")} ${supportTier ?? "N/A"}`
-                : "N/A"}
-            </p>
+        <div className="oc-surface-strong mt-2 overflow-hidden">
+          <div className="grid sm:grid-cols-3">
+            {roleRanks.map((role, index) => (
+              <div
+                key={role.label}
+                className={`px-3 py-3 ${index > 0 ? "border-t border-white/6 sm:border-t-0 sm:border-l" : ""} border-white/6`}
+              >
+                <p
+                  className={`${labelClassName} ${role.active ? "text-[#9a9aa3]" : "text-[#5f5f66]"}`}
+                >
+                  {role.label}
+                </p>
+                <p
+                  className={`mt-1 text-[15px] font-semibold tracking-[-0.03em] ${role.active ? "text-[var(--text)]" : "text-[#6b6b73]"}`}
+                >
+                  {role.value}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       </div>

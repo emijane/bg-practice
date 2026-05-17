@@ -4,6 +4,7 @@
 export type Player = {
   username: string;
   avatar: string;
+  namecard: string;
   title?: string | null;
   last_updated_at?: number | null;
   endorsement?: {
