@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Overwatch Player Search",
+  title: "ow-player-tracker",
   description: "Search Overwatch player profiles and view summary details using the OverFast API.",
 };
 
