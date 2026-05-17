@@ -7,10 +7,10 @@ export default function Home() {
         <section className="flex w-full max-w-3xl flex-col gap-5">
           <div className="flex flex-col gap-2 pb-4">
             <div className="flex flex-col gap-1">
-              <h1 className="max-w-2xl text-[34px] font-semibold tracking-[-0.04em] text-[var(--text)] sm:text-[40px]">
+              <h1 className="max-w-2xl text-[34px] font-semibold tracking-[-0.04em] text-[#f5f5f5] sm:text-[40px]">
                 Player Lookup
               </h1>
-              <p className="max-w-2xl text-sm text-[var(--text-muted)] sm:text-[15px]">
+              <p className="max-w-2xl text-sm text-[#a1a1a1] sm:text-[15px]">
                 Search public Overwatch profiles by BattleTag. Private profiles won&apos;t return competitive details here.
               </p>
             </div>

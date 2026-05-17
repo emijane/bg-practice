@@ -31,15 +31,15 @@ export default function PlayerSearch() {
 
   return (
     <section className="flex w-full flex-col gap-4">
-      <div className="grid gap-3 rounded-[14px] border border-[var(--border)] bg-[var(--surface)] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.035),0_10px_22px_rgba(0,0,0,0.18)]">
+      <div className="grid gap-3 rounded-[14px] border border-white/6 bg-[#111111] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.035),0_10px_22px_rgba(0,0,0,0.18)]">
         <div className="flex items-center justify-between gap-3">
           <div className="flex flex-col gap-1">
-            <p className="text-sm text-[var(--text-muted)]">
+            <p className="text-sm text-[#a1a1a1]">
               Enter a BattleTag with `#` or `-`.
             </p>
           </div>
           {searchedBattleTag ? (
-            <p className="hidden font-[var(--font-ibm-plex-mono)] text-[11px] uppercase tracking-[0.12em] text-[var(--text-subtle)] sm:block">
+            <p className="hidden [font-family:var(--font-ibm-plex-mono)] text-[11px] uppercase tracking-[0.12em] text-[#737373] sm:block">
               Active result: {searchedBattleTag}
             </p>
           ) : null}
@@ -47,13 +47,13 @@ export default function PlayerSearch() {
 
         <div className="flex flex-col gap-2 sm:flex-row">
           <input
-            className="min-w-0 flex-1 rounded-[12px] border border-[var(--border)] bg-[var(--bg)] px-3 py-2.5 text-sm text-[var(--text)] placeholder:text-[var(--text-subtle)] focus:border-[var(--border-hover)] focus:outline-none"
+            className="min-w-0 flex-1 rounded-xl border border-white/6 bg-[#070709] px-3 py-2.5 text-sm text-[#f5f5f5] placeholder:text-[#737373] focus:border-white/12 focus:outline-none"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             placeholder="Search for a player..."
           />
           <button
-            className="rounded-[12px] border border-[var(--border)] bg-[var(--surface)] px-4 py-2.5 text-sm font-semibold tracking-[-0.02em] text-[var(--text)] transition duration-150 hover:border-[var(--border-hover)] hover:bg-[var(--surface-hover)] sm:w-auto"
+            className="rounded-xl border border-white/6 bg-[#111111] px-4 py-2.5 text-sm font-semibold tracking-[-0.02em] text-[#f5f5f5] transition duration-150 hover:border-white/12 hover:bg-[#171717] sm:w-auto"
             onClick={handleSearch}
           >
             Search
@@ -62,7 +62,7 @@ export default function PlayerSearch() {
       </div>
 
       {error ? (
-        <p className="font-[var(--font-ibm-plex-mono)] text-[11px] uppercase tracking-[0.14em] text-[var(--text-subtle)]">
+        <p className="[font-family:var(--font-ibm-plex-mono)] text-[11px] uppercase tracking-[0.14em] text-[#737373]">
           {error}
         </p>
       ) : null}

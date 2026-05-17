@@ -33,12 +33,12 @@ export default function PlayerCard({ player, searchedBattleTag }: PlayerCardProp
   }
 
   const cardClassName =
-    "grid gap-4 rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.035),0_10px_22px_rgba(0,0,0,0.18)] transition duration-150 hover:-translate-y-px hover:border-[var(--border-hover)] hover:bg-[var(--surface-hover)] sm:grid-cols-[auto_1fr]";
+    "grid gap-4 rounded-xl border border-white/6 bg-[#111111] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.035),0_10px_22px_rgba(0,0,0,0.18)] transition duration-150 hover:-translate-y-px hover:border-white/12 hover:bg-[#171717] sm:grid-cols-[auto_1fr]";
 
   const labelClassName =
-    "font-[var(--font-ibm-plex-mono)] text-[11px] uppercase tracking-[0.14em] text-[var(--text-subtle)]";
+    "[font-family:var(--font-ibm-plex-mono)] text-[11px] uppercase tracking-[0.14em] text-[#737373]";
 
-  const valueClassName = "text-sm font-semibold tracking-[-0.02em] text-[var(--text)]";
+  const valueClassName = "text-sm font-semibold tracking-[-0.02em] text-[#f5f5f5]";
 
   return (
     <article className={cardClassName}>
@@ -48,29 +48,29 @@ export default function PlayerCard({ player, searchedBattleTag }: PlayerCardProp
           alt={`${username} avatar`}
           width={88}
           height={88}
-          className="h-22 w-22 rounded-full border border-[var(--border)] object-cover"
+          className="h-22 w-22 rounded-full border border-white/6 object-cover"
         />
         <div className="flex min-w-0 flex-1 flex-col gap-1 sm:hidden">
-          <p className="truncate text-[15px] font-semibold tracking-[-0.03em] text-[var(--text)]">
+          <p className="truncate text-[15px] font-semibold tracking-[-0.03em] text-[#f5f5f5]">
             {searchedBattleTag}
           </p>
-          <p className="truncate text-sm text-[var(--text-muted)]">{title}</p>
+          <p className="truncate text-sm text-[#a1a1a1]">{title}</p>
         </div>
       </div>
 
       <div className="flex min-w-0 flex-col gap-4">
         <div className="hidden flex-col gap-1 sm:flex">
-          <p className="truncate text-[15px] font-semibold tracking-[-0.03em] text-[var(--text)]">
+          <p className="truncate text-[15px] font-semibold tracking-[-0.03em] text-[#f5f5f5]">
             {searchedBattleTag}
           </p>
-          <p className="truncate text-sm text-[var(--text-muted)]">{title}</p>
+          <p className="truncate text-sm text-[#a1a1a1]">{title}</p>
         </div>
 
         <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-start">
           <div className="grid gap-3 sm:grid-cols-3">
             <div className="flex flex-col gap-1">
               <p className={labelClassName}>Updated</p>
-              <p className="font-[var(--font-ibm-plex-mono)] text-[11px] text-[var(--text-muted)]">
+              <p className="[font-family:var(--font-ibm-plex-mono)] text-[11px] text-[#a1a1a1]">
                 {lastUpdatedAt != null
                   ? new Date(lastUpdatedAt * 1000).toLocaleString()
                   : "Unavailable"}
@@ -88,20 +88,20 @@ export default function PlayerCard({ player, searchedBattleTag }: PlayerCardProp
             </div>
           </div>
 
-          <p className="justify-self-start rounded-full border border-[var(--border)] bg-[var(--bg)] px-2.5 py-1 font-[var(--font-ibm-plex-mono)] text-[11px] uppercase tracking-[0.14em] text-[var(--text-subtle)] sm:justify-self-end">
+          <p className="justify-self-start rounded-full border border-white/6 bg-[#070709] px-2.5 py-1 [font-family:var(--font-ibm-plex-mono)] text-[11px] uppercase tracking-[0.14em] text-[#737373] sm:justify-self-end">
             Competitive
           </p>
         </div>
 
         <div className="grid gap-2 sm:grid-cols-3">
-          <div className="rounded-[12px] border border-[var(--border)] bg-[var(--bg)] px-3 py-2">
+          <div className="rounded-xl border border-white/6 bg-[#070709] px-3 py-2">
             <p className={labelClassName}>Tank</p>
             <p className={`${valueClassName} mt-1`}>
               {player.competitive?.pc?.tank ? `${tankDivision ?? "N/A"} ${tankTier ?? "N/A"}` : "N/A"}
             </p>
           </div>
 
-          <div className="rounded-[12px] border border-[var(--border)] bg-[var(--bg)] px-3 py-2">
+          <div className="rounded-xl border border-white/6 bg-[#070709] px-3 py-2">
             <p className={labelClassName}>Damage</p>
             <p className={`${valueClassName} mt-1`}>
               {player.competitive?.pc?.damage
@@ -110,7 +110,7 @@ export default function PlayerCard({ player, searchedBattleTag }: PlayerCardProp
             </p>
           </div>
 
-          <div className="rounded-[12px] border border-[var(--border)] bg-[var(--bg)] px-3 py-2">
+          <div className="rounded-xl border border-white/6 bg-[#070709] px-3 py-2">
             <p className={labelClassName}>Support</p>
             <p className={`${valueClassName} mt-1`}>
               {player.competitive?.pc?.support
