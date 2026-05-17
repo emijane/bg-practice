@@ -1,21 +1,35 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { IBM_Plex_Mono, Inter_Tight } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const interTight = Inter_Tight({
+  variable: "--font-inter-tight",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const ibmPlexMono = IBM_Plex_Mono({
+  variable: "--font-ibm-plex-mono",
   subsets: ["latin"],
+  weight: ["400", "500"],
 });
 
 export const metadata: Metadata = {
-  title: "ow-player-tracker",
-  description: "Search Overwatch player profiles and view summary details using the OverFast API.",
+  title: "Overclock Player Tracker",
+  description:
+    "Search Overwatch player profiles and inspect competitive summary details with a compact Overclock-inspired UI.",
 };
+
+const bodyClassName = [
+  interTight.variable,
+  ibmPlexMono.variable,
+  "min-h-full antialiased",
+].join(" ");
+
+const htmlClassName = [
+  interTight.variable,
+  ibmPlexMono.variable,
+  "h-full",
+].join(" ");
 
 export default function RootLayout({
   children,
@@ -23,11 +37,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col">{children}</body>
+    <html lang="en" className={htmlClassName}>
+      <body className={bodyClassName}>{children}</body>
     </html>
   );
 }
